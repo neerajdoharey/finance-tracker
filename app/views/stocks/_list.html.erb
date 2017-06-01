@@ -1,0 +1,24 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Ticker</th>
+      <th>Name</th>
+      <th>Price</th>
+      <% if current_user.id %>
+        <th>Action</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_stocks.each do |stock| %>
+      <tr>
+        <td><%= stock.ticker %></td>
+        <td><%= stock.name %></td>
+        <td><%= stock.last_price %></td>
+        <% if current_user.id %>
+          <td><%= link_to "Delete", user_stock_path(stock), method: :delete, :date => {:confirm => "are you sure"}, :class => "btn btn-danger btn-xs" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
