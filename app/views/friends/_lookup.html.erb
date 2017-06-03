@@ -1,0 +1,45 @@
+<div id="friend-lookup">
+  <h1>Search for friends</h1>
+  <div class="row">
+    <%= form_tag search_friends_path, remote: true, method: :get, id: 'friend-lookup-form' do %>
+      <div class="form-group col-md-12">
+        <div class="col-md-10">
+          <%= text_field_tag :search_param, params[:search_param], placeholder: "First name, last name or email", autofocus: true, class: "form-control search-box input-lg" %>
+        </div>
+        <div class="col-md-2">
+          <%=  button_tag("Search" ,type: :submit, class: "btn btn-lg btn-success" ) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= render "common/spinner" %>
+  <div class="row">
+    <% if @users %>
+      <% if @users.size > 0 %>
+        <div id="friend-lookup-result" class="well col-md-10">
+          <table class="search-result-table col-md-12">
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><strong>Full name: </strong><%= user.full_name %></td>
+                  <td><strong>email: </strong><%= user.email %></td>
+                  <td><%= link_to "Profile", user_path(user), class: 'btn btn-success btn-xs' %></td>
+                  <% if current_user.not_friends_with?(user) %>
+                    <td><%= link_to "Add to my friend", add_friend_path(user: current_user, friend: user), class: 'btn btn-success btn-xs', method: :post %></td>
+                  <% else %>
+                    <span class="label label-default">
+                      You are friends
+                    </span>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p> No people match with search critaria.</p>
+      <% end %>
+    <% end %>
+  </div>
+  <div id="friend-lookup-errors">  </div>
+</div>

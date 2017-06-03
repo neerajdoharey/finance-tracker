@@ -1,0 +1,15 @@
+<h2>User Details</h2>
+<dl>
+  <dt><strong>Full Name</strong></dt>
+  <dd><%= @user.full_name %></dd>
+  <dt><strong>Email</strong></dt>
+  <dd><%= @user.email %></dd>
+</dl>
+
+<% if @user_stocks.size > 0 %>
+  <%= render "stocks/list" %>
+<% else %>
+  <p>This User is not tracking any stock </p>
+<% end %>
+
+<%= link_to "Back", my_friends_path , class: 'btn btn-success btn-xs'  %>
